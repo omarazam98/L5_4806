@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Buddy</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style type="text/css">
+        body {
+            background-color: darkgoldenrod;
+        }
+
+        h1 {
+            color: midnightblue;
+        }
+
+        input {
+            display: inline-block;
+            float: right;
+        }
+
+        th, td {
+            margin-left: 50px;
+            border: 2px solid midnightblue;
+        }
+    </style>
+</head>
+<body>
+
+<div style="float: left">
+    <h1>New Buddy</h1>
+    <form action="/buddy/add" method="post" th:object="${buddy}">
+        <p>Name: <input id="name" th:field="*{name}" type="text"/></p>
+        <p>Address: <input id="address" th:field="*{address}" type="text"/></p>
+        <p>Phone #: <input id="phone" th:field="*{phoneNumber}" type="text"/></p>
+        <p>Birthday: <input id="birthday" th:field="*{birthday}" type="text"/></p>
+        <p>Company: <input id="company" th:field="*{company}" type="text"/></p>
+        <p><input id="add_button" type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>
+<div style="float: left">
+    <h1>Address Book</h1>
+    <form action="/buddy/show" method="get">
+        <table style="float: left">
+            <tr>
+                <th th:text="'Name'"/>
+                <th th:text="'Address'"/>
+                <th th:text="'Phone Number'"/>
+                <th th:text="'Birthday'"/>
+                <th th:text="'Company'"/>
+            </tr>
+            <tr th:each="buddy: ${buddies}">
+                <td th:text="${buddy.name}">
+                </td>
+                <td th:text="${buddy.address}">
+
+                </td>
+                <td th:text="${buddy.phoneNumber}">
+
+                </td>
+                <td th:text="${buddy.birthday}">
+
+                </td>
+                <td th:text="${buddy.company}">
+
+                </td>
+                <input name="id" th:value="${buddy.id}" type="hidden"/>
+                <td>
+                    <button type="submit" value="Submit">View</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

@@ -25,8 +25,15 @@ public class AddressBook {
         this.id = id;
     }
 
+    public void addBuddy(BuddyInfo buddy) {
+        this.buddies.add(buddy);
+    }
+
     public List<BuddyInfo> getBuddies() {
         return this.buddies;
     }
 
+    public int getSize() {
+        return this.buddies.size();
+    }
 }

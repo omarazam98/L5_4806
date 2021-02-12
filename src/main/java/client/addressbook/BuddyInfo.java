@@ -25,6 +25,15 @@ public class BuddyInfo {
         this.phoneNumber = null;
     }
 
+    public BuddyInfo(String name, String address, String birthday,
+                     String company, String phoneNumber) {
+        this.name = name;
+        this.address = address;
+        this.birthday = birthday;
+        this.company = company;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Long getId() {
         return this.id;
     }

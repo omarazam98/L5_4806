@@ -1,10 +1,9 @@
-SYSC 4806 L5 
+SYSC 4806 L6
 
-https://github.com/omarazam98/L5_4806 Branch l6
+Part 1
 
 Author - Omar Azam , Student# 101048498
 
-Part 2
+Travis CI - https://travis-ci.org/github/omarazam98/L5_4806
 
-travis - https://travis-ci.org/github/omarazam98/L5_4806/builds/760597165
-Heroku Deployment - https://l6-4806.herokuapp.com
+Heroku Deployment - https://l5-4806.herokuapp.com

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Buddy</title>
@@ -19,16 +18,53 @@
         }
     </style>
 </head>
+<div id="show2">
+    <p th:text="'Name: ' + ${name}"/>
+    <p th:text="'Address: ' + ${address}"/>
+    <p th:text="'Birthday: ' + ${birthday}"/>
+    <p th:text="'Company: ' + ${company}"/>
+    <p th:text="'Phone Number: ' + ${phonenumber}"/>
+    <form id="delete" action="/buddy/remove" method="get">
+        <input name="id" th:value="${id}" type="hidden"/>
+        <button type="submit" value="Submit">Delete Buddy</button>
+    </form>
+</div>
+<div id="deleteView">
+
+</div>
+<button id="back">Main Menu</button>
 <body>
-<p th:text="'Name: ' + ${name}"/>
-<p th:text="'Address: ' + ${address}"/>
-<p th:text="'Birthday: ' + ${birthday}"/>
-<p th:text="'Company: ' + ${company}"/>
-<p th:text="'Phone Number: ' + ${phonenumber}"/>
-<form action="/buddy/remove" method="get">
-    <input name="id" th:value="${id}" type="hidden"/>
-    <button type="submit" value="Submit">Delete Buddy</button>
-</form>
-<a href="javascript:location.replace(document.referrer)">Main Menu</a>
-</body>
-</html>
+
+<script>
+    $(document).ready(function() {
+        $('#show2').show()
+        $("#back").on("click", function (e) {
+            $("#back").hide();
+            $('#body').empty()
+            $('#show2').hide()
+            $.ajax({
+                url: '/',
+                dataType: 'html',
+                success: function(html) {
+                    $('#body').append(html);
+                }
+            });
+        })
+        $("#delete").submit(function (e) {
+            $('#show2').hide()
+            e.preventDefault();
+            const form = $(this);
+            const url = form.attr('action');
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: form.serialize(),
+                success: function (response) {
+                    $('#book').hide();
+                    $('#deleteView').append(response);
+                }
+            });
+        });
+    });
+</script>

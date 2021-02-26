@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Buddy</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
@@ -25,7 +24,7 @@
         }
     </style>
 </head>
-<body>
+<body id="body">
 <div id="book">
     <div style="float: left">
         <h1>New Buddy</h1>
@@ -77,39 +76,42 @@
 <div id="show">
 
 </div>
-</body>
+
 <script>
-    $("#form2").submit(function(e) {
-        e.preventDefault();
-        const form = $(this);
-        const url = form.attr('action');
+    $(document).ready(function() {
+        $("#form2").submit(function (e) {
+            e.preventDefault();
+            const form = $(this);
+            const url = form.attr('action');
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(),
-            success: function(response)
-            {
-                $('#book').hide();
-                $('#show').html(response);
-            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function (response) {
+                    $('#book').hide();
+                    $('#show').empty();
+                    $('#show').append(response);
+                }
+            });
         });
-    });
-    $("#form3").submit(function(e) {
-        e.preventDefault();
-        const form = $(this);
-        const url = form.attr('action');
+        $("#form3").submit(function (e) {
+            e.preventDefault();
+            const form = $(this);
+            const url = form.attr('action');
 
-        $.ajax({
-            type: "GET",
-            url: url,
-            data: form.serialize(),
-            success: function(response)
-            {
-                $('#book').hide();
-                $('#show').html(response);
-            }
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: form.serialize(),
+                success: function (response) {
+                    $('#book').hide();
+                    $('#show').empty();
+                    $('#show').append(response);
+                }
+            });
         });
     });
 </script>
+</body>
 </html>

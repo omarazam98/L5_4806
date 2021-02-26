@@ -4,4 +4,4 @@ deploy:
   api_key: $HEROKU_API_KEY
   app: l6-4806
   on:
-    branch: main
+    branch: lab6

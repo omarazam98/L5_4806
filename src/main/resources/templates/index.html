@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 <head>
     <title>Buddy</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
@@ -24,51 +26,90 @@
     </style>
 </head>
 <body>
+<div id="book">
+    <div style="float: left">
+        <h1>New Buddy</h1>
+        <form id="form2" action="/buddy/add" method="post" th:object="${buddy}">
+            <p>Name: <input id="name" name="name" th:field="*{name}" type="text"/></p>
+            <p>Address: <input id="address" th:field="*{address}" type="text"/></p>
+            <p>Phone #: <input id="phone" th:field="*{phoneNumber}" type="text"/></p>
+            <p>Birthday: <input id="birthday" th:field="*{birthday}" type="text"/></p>
+            <p>Company: <input id="company" th:field="*{company}" type="text"/></p>
+            <p><input id="add_button" type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+        </form>
+    </div>
+    <div style="float: left">
+        <h1>Address Book</h1>
+        <form id="form3" action="/buddy/show" method="get">
+            <table style="float: left">
+                <tr>
+                    <th th:text="'Name'"/>
+                    <th th:text="'Address'"/>
+                    <th th:text="'Phone Number'"/>
+                    <th th:text="'Birthday'"/>
+                    <th th:text="'Company'"/>
+                </tr>
+                <tr th:each="buddy: ${buddies}">
+                    <td th:text="${buddy.name}">
+                    </td>
+                    <td th:text="${buddy.address}">
 
-<div style="float: left">
-    <h1>New Buddy</h1>
-    <form action="/buddy/add" method="post" th:object="${buddy}">
-        <p>Name: <input id="name" th:field="*{name}" type="text"/></p>
-        <p>Address: <input id="address" th:field="*{address}" type="text"/></p>
-        <p>Phone #: <input id="phone" th:field="*{phoneNumber}" type="text"/></p>
-        <p>Birthday: <input id="birthday" th:field="*{birthday}" type="text"/></p>
-        <p>Company: <input id="company" th:field="*{company}" type="text"/></p>
-        <p><input id="add_button" type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-    </form>
+                    </td>
+                    <td th:text="${buddy.phoneNumber}">
+
+                    </td>
+                    <td th:text="${buddy.birthday}">
+
+                    </td>
+                    <td th:text="${buddy.company}">
+
+                    </td>
+                    <input name="id" th:value="${buddy.id}" type="hidden"/>
+                    <td>
+                        <button type="submit" value="Submit">View</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
-<div style="float: left">
-    <h1>Address Book</h1>
-    <form action="/buddy/show" method="get">
-        <table style="float: left">
-            <tr>
-                <th th:text="'Name'"/>
-                <th th:text="'Address'"/>
-                <th th:text="'Phone Number'"/>
-                <th th:text="'Birthday'"/>
-                <th th:text="'Company'"/>
-            </tr>
-            <tr th:each="buddy: ${buddies}">
-                <td th:text="${buddy.name}">
-                </td>
-                <td th:text="${buddy.address}">
 
-                </td>
-                <td th:text="${buddy.phoneNumber}">
+<div id="show">
 
-                </td>
-                <td th:text="${buddy.birthday}">
-
-                </td>
-                <td th:text="${buddy.company}">
-
-                </td>
-                <input name="id" th:value="${buddy.id}" type="hidden"/>
-                <td>
-                    <button type="submit" value="Submit">View</button>
-                </td>
-            </tr>
-        </table>
-    </form>
 </div>
 </body>
+<script>
+    $("#form2").submit(function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(response)
+            {
+                $('#book').hide();
+                $('#show').html(response);
+            }
+        });
+    });
+    $("#form3").submit(function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const url = form.attr('action');
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: form.serialize(),
+            success: function(response)
+            {
+                $('#book').hide();
+                $('#show').html(response);
+            }
+        });
+    });
+</script>
 </html>
